@@ -3,6 +3,18 @@
 class NoteController extends Controller
 {
 
+	public function actions()
+	{
+		return array(
+			// captcha action renders the CAPTCHA image displayed on the contact page
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+		);
+	}
+
+
 	public function filters()
 	{
 	    return array(
@@ -42,9 +54,54 @@ class NoteController extends Controller
 		$this->render('index', array('dataProvider'=>$dataProvider));
 	}
 
-	public function actionView($id)
+	public function actionView()
 	{
-		$this->render('view', array('model'=>$this->loadModel($id)));
+		if(isset($_GET['id']))
+		{
+			$id = $_GET['id'];
+		
+		
+			$model = Note::model()->findByPk($id);
+
+			//print_r($model->comments);
+
+			$comment = new Comment;
+		
+			if(Yii::app()->user->isGuest)
+			{
+				$comment->scenario = 'Guest';
+			}
+
+			if(isset($_POST['Comment']))
+			{
+				$comment->attributes = $_POST['Comment'];
+				$comment->note_id = $model->id;
+
+				if($comment->save())
+				{
+					Yii::app()->user->setFlash('comment','Комментарий успешно добавлен!');
+					$this->refresh();
+				}	
+			}
+
+		}
+
+		if(isset($_GET['delCom']))
+		{
+			$comment = new Comment;
+			$page = (int)$_GET['page'];
+			$id = (int)$_GET['delCom'];
+			$comment = Comment::model()->deleteByPk($id);
+			if($comment>0)
+			{
+				Yii::app()->user->setFlash('comment','Комментарий успешно удален!');
+				
+				$this->redirect(array('note/view','id'=>$page));
+			}
+
+		}
+
+		$this->render('view', array('model'=>$model, 'comment'=>$comment)); //
 	}
 
 	public function loadModel($id)

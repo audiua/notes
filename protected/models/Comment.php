@@ -1,23 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "{{note}}".
+ * This is the model class for table "{{comment}}".
  *
- * The followings are the available columns in table '{{note}}':
+ * The followings are the available columns in table '{{comment}}':
  * @property string $id
- * @property string $title
  * @property string $text
  * @property string $created
- * @property string $author_id
+ * @property string $author
+ * @property string $note_id
  */
-class Note extends CActiveRecord
+class Comment extends CActiveRecord
 {
+	public $verifyCode;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return '{{note}}';
+		return '{{comment}}';
 	}
 
 	/**
@@ -25,11 +26,17 @@ class Note extends CActiveRecord
 	 */
 	public function rules()
 	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
 		return array(
-			array('title, text', 'required'),
-			array('title', 'length', 'max'=>255),
-			array('id, title, text, created, author_id', 'safe', 'on'=>'mySearch'),// безопасное присваивание
-			array('id, title, text, created, author_id', 'safe', 'on'=>'search'),
+			array('text', 'required'),
+			array('text, author', 'required', 'on'=>'Guest'),
+			array('created, note_id', 'length', 'max'=>11),
+			array('author', 'length', 'max'=>20),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, text, created, author, note_id', 'safe', 'on'=>'search'),
+			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(),'on'=>'Guest'),
 		);
 	}
 
@@ -41,9 +48,6 @@ class Note extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'author'=> array(self::BELONGS_TO, 'Author', 'author_id'),
-			'comments' => array(self::HAS_MANY, 'Comment', 'note_id',
-            	'order'=>'comments.created DESC'),
 		);
 	}
 
@@ -54,10 +58,10 @@ class Note extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => Yii::t('lang_uk', 'Title'),
-			'text' => Yii::t('lang_uk', 'Text'),
-			'created' => Yii::t('lang_uk', 'Created'),
-			'author_id' => Yii::t('lang_uk', 'Author_id'),
+			'text' => 'Text',
+			'created' => 'Created',
+			'author' => 'Author',
+			'note_id' => 'Note',
 		);
 	}
 
@@ -80,10 +84,10 @@ class Note extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('title',$this->title,true);
 		$criteria->compare('text',$this->text,true);
 		$criteria->compare('created',$this->created,true);
-		$criteria->compare('author_id',$this->author_id,true);
+		$criteria->compare('author',$this->author,true);
+		$criteria->compare('note_id',$this->note_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -94,21 +98,24 @@ class Note extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Note the static model class
+	 * @return Comment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
+
 	public function beforeSave()
 	{
 		if($this->isNewRecord)
 		{
 			$this->created = time();
-			$this->author_id = Yii::app()->user->id;
 
-			// пишем id автора из арр
+			if(Yii::app()->user->checkAccess('author'))
+			{
+				$this->author = Yii::app()->user->name;
+			}
 		}
 
 		return parent::beforeSave();

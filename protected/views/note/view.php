@@ -11,7 +11,6 @@ $this->menu = array(
 			array('label'=>Yii::t('lang_uk', 'Delete'), 'url'=>array('delete', 'id'=>$model->id))
 		);
 
-
 if(Yii::app()->user->hasFlash('update')):
 
 echo '<div class="flash-success">';
@@ -36,5 +35,19 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value'=>$model->author->login,
 		),
 )));
+
+if(Yii::app()->user->hasFlash('comment')):
+
+echo '<div class="flash-success">';
+    echo Yii::app()->user->getFlash('comment'); 
+echo '</div>';
+
+endif;
+
+echo $this->renderPartial('_comment', array('model'=>$comment));
+
+echo $this->renderPartial('_comView', array('model'=>$model));
+
+
 
 ?>
