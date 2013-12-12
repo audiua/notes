@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu = array(
-	array('label'=>'Create', 'url'=>array('create')),
+	array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')),
 
 );
 

@@ -52,10 +52,10 @@ class Note extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
-			'text' => 'Text',
-			'created' => 'Created',
-			'author_id' => 'Author',
+			'title' => Yii::t('lang_uk', 'Title'),
+			'text' => Yii::t('lang_uk', 'Text'),
+			'created' => Yii::t('lang_uk', 'Created'),
+			'author_id' => Yii::t('lang_uk', 'Author_id'),
 		);
 	}
 

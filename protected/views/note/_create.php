@@ -1,10 +1,20 @@
 <?php 
-	$this->menu = array(
-		array('label'=>'Create', 'url'=>array('create')),
-		array('label'=>'Update', 'url'=>array('update', 'id'=>$model->id)),
-		array('label'=>'Delete', 'url'=>array('delete', 'id'=>$model->id)),
+	if($model->isNewRecord)
+	{
+		$this->menu = array(
+			array('label'=>Yii::t('lang_uk', 'Create'),'url'=>array('create'))
+		);
+	}
+	else
+	{
+		$this->menu = array(
+			array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')),
+			array('label'=>Yii::t('lang_uk', 'Update'), 'url'=>array('update', 'id'=>$model->id)),
+			array('label'=>Yii::t('lang_uk', 'Delete'), 'url'=>array('delete', 'id'=>$model->id))
+		);
+	}
 
-	);
+	
 ?>
 
 <div class="form">
@@ -26,7 +36,7 @@
 			echo '</div>';
 
 			echo '<div class = "row buttons">';
-				echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Обновить');
+				echo CHtml::submitButton($model->isNewRecord ? Yii::t('lang_uk', 'Save') : Yii::t('lang_uk', 'Update'));
 			echo '</div>';
 
 		$this->endWidget();

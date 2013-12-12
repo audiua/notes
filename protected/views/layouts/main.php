@@ -29,10 +29,10 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'Notes list', 'url'=>array('/note')),
-				array('label'=>'Create', 'url'=>array('/note/create')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>Yii::t('lang_uk', 'Home'), 'url'=>array('/site/index')),
+				array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
+				array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('/note/create')),
+				array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
