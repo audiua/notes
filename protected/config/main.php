@@ -10,7 +10,7 @@ return array(
 	'name'=>'Notes',
 	'defaultController' => 'note',
 	'sourceLanguage'=>'en',
-    'language'=>'en',
+    'language'=>'uk',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -38,6 +38,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'class' => 'WebUser',
 		),
 		// uncomment the following to enable URLs in path-format
 		
@@ -49,6 +50,13 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 			'showScriptName'=>false,
+		),
+
+		'authManager' => array(
+		    // Будем использовать свой менеджер авторизации
+		    'class' => 'PhpAuthManager',
+		    // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
+		    'defaultRoles' => array('guest'),
 		),
 		
 		/*

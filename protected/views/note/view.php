@@ -4,6 +4,7 @@ $this->breadcrumbs=array(
 	$model->title,
 );
 
+
 $this->menu = array(
 			array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')),
 			array('label'=>Yii::t('lang_uk', 'Update'), 'url'=>array('update', 'id'=>$model->id)),

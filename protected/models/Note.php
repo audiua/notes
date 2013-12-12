@@ -104,7 +104,7 @@ class Note extends CActiveRecord
 		if($this->isNewRecord)
 		{
 			$this->created = time();
-			$this->author_id = 1;
+			$this->author_id = Yii::app()->user->id;
 
 			// пишем id автора из арр
 		}

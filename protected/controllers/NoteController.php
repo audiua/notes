@@ -3,6 +3,32 @@
 class NoteController extends Controller
 {
 
+	public function filters()
+	{
+	    return array(
+	        'accessControl',
+	    );
+	}
+
+
+	public function accessRules()
+	{
+		return array(
+
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('create', 'update', 'delete'),
+				'roles'=>array('author'),
+			),
+			
+			array('deny',  // deny all users
+				'actions'=>array('create', 'update', 'delete'),
+				'users'=>array('*'),
+			),
+		);
+	}
+
+
+
 	public function actionIndex()
 	{
 		$criteria = new CDbCriteria;
@@ -56,39 +82,71 @@ class NoteController extends Controller
 
 		$model = Note::model()->findByPk($id);
 
-		if(isset($_POST['Note']))
+		if(Yii::app()->user->id == $model->author_id)
 		{
-			$model->attributes = $_POST['Note'];
-			if($model->save())
+			if(isset($_POST['Note']))
 			{
-				Yii::app()->user->setFlash('update','Страница обновлена!');
-				$this->redirect(array('view', 'id'=>$model->id));
+				$model->attributes = $_POST['Note'];
+				if($model->save())
+				{
+					Yii::app()->user->setFlash('update','Страница обновлена!');
+					$this->redirect(array('view', 'id'=>$model->id));
+				}
 			}
+			
+			$this->render('create', array('model'=>$this->loadModel($id)));
 		}
+		else
+		{
+			Yii::app()->user->setFlash('update','Можно обновлять только свои заметки!');
+			$this->render('view', array('model'=>$model));
+		}
+
 		
-		$this->render('create', array('model'=>$this->loadModel($id)));
 	}
 
 	public function actionDelete($id)
 	{
 		$model = $this->loadModel($id);
 
-		$result = $model->delete();
-		
-		if($result > 0)
+		if(Yii::app()->user->id == $model->author_id)
 		{
-			Yii::app()->user->setFlash('delete','Страница <b>'.$model->title.'</b> удалена!');
+			$result = $model->delete();
+
+			if($result > 0)
+			{
+				Yii::app()->user->setFlash('delete','Страница <b>'.$model->title.'</b> удалена!');
+			}
+
+			$criteria = new CDbCriteria;
+
+			$dataProvider = new CActiveDataProvider('Note', array(
+				'criteria'=>$criteria,
+				'pagination'=>array('pageSize'=>10),
+				
+			));
+
+			$this->render('index', array('dataProvider'=>$dataProvider));
+		}
+		else
+		{
+			$criteria = new CDbCriteria;
+
+			$dataProvider = new CActiveDataProvider('Note', array(
+				'criteria'=>$criteria,
+				'pagination'=>array('pageSize'=>10),
+				
+			));
+
+			Yii::app()->user->setFlash('delete','Удалять чужие заметки не разрешенно!');
+			$this->render('index', array('dataProvider'=>$dataProvider));
 		}
 
-		$criteria = new CDbCriteria;
 
-		$dataProvider = new CActiveDataProvider('Note', array(
-			'criteria'=>$criteria,
-			'pagination'=>array('pageSize'=>10),
+
+		
+		
 			
-		));
-
-		$this->render('index', array('dataProvider'=>$dataProvider));	
 	}
 
 	public function actionSearch()
@@ -108,7 +166,7 @@ class NoteController extends Controller
 			$criteria->compare('author_id', $_POST['Note']['author_id']);
 
 		    $dataProvider = new CActiveDataProvider('Note', array('criteria'=>$criteria));
-			//$dataProvider->model->scenario = 'mySearch';
+			$dataProvider->model->scenario = 'mySearch';
 			$dataProvider->model->attributes = $_POST['Note'];
 
 		    $this->render('index', array('dataProvider'=>$dataProvider));
