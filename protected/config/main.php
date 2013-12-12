@@ -84,7 +84,8 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'info',
+					'categories'=>'system.*',
 				),
 				// uncomment the following to show log messages on web pages
 				/*

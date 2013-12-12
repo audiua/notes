@@ -120,4 +120,19 @@ class Comment extends CActiveRecord
 
 		return parent::beforeSave();
 	}
+
+
+	public function afterSave()
+	{
+
+		Yii::log( $this->author.' оставил комментарий. ', 'info', 'system.*');
+
+		return parent::afterSave();
+	}
+
+	protected function afterDelete()
+	{
+		Yii::log($this->author.' удалил комментарий.', 'info', 'system.*');
+	    return parent::afterDelete();    
+	}
 }

@@ -74,4 +74,14 @@ class LoginForm extends CFormModel
 		else
 			return false;
 	}
+
+	public function afterValidate(){
+        // Модель проверена и наполнена.
+        // Получаем fullName:
+        Yii::log($this->username.' зашел на сайт.', 'info', 'system.*');
+ 
+        // Передаём эстафетную палочку другим обработчикам
+        // данного события.
+        return parent::afterValidate();
+    }
 }

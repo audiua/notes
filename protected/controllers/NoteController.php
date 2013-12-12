@@ -91,7 +91,9 @@ class NoteController extends Controller
 			$comment = new Comment;
 			$page = (int)$_GET['page'];
 			$id = (int)$_GET['delCom'];
-			$comment = Comment::model()->deleteByPk($id);
+			$comment = Comment::model()->findByPk($id)->delete();
+
+		
 			if($comment>0)
 			{
 				Yii::app()->user->setFlash('comment','Комментарий успешно удален!');

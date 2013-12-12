@@ -113,4 +113,34 @@ class Note extends CActiveRecord
 
 		return parent::beforeSave();
 	}
+
+	public function afterSave()
+	{
+		if($this->isNewRecord)
+		{
+			Yii::log(Yii::app()->user->name.' создал запись: '.$this->title, 'info', 'system.*');
+		}
+		else
+		{
+			Yii::log(Yii::app()->user->name.' обновил запись: '.$this->title, 'info', 'system.*');
+		}
+		
+		// пишем в логи 
+		// обновлена
+		// добавлена
+		return parent::afterSave();
+	}
+
+	protected function afterDelete()
+	{
+
+		// удаляем все комментарии которые прринадлежать удаленной записи
+		// пишем лог
+		Comment::model()->deleteAll('note_id = '.$this->id);
+
+		Yii::log(Yii::app()->user->name.' удалил запись: '.$this->title, 'info', 'system.*');
+	 	
+	    return parent::afterDelete();
+	    
+	}
 }
