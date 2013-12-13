@@ -40,8 +40,7 @@ return array(
 			'allowAutoLogin'=>true,
 			'class' => 'WebUser',
 		),
-		// uncomment the following to enable URLs in path-format
-		
+        'cache'=>array('class'=>'system.caching.CFileCache'),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(

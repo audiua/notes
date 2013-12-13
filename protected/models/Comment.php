@@ -108,10 +108,11 @@ class Comment extends CActiveRecord
 
 	public function beforeSave()
 	{
+		$this->created = time();
+
 		if($this->isNewRecord)
 		{
-			$this->created = time();
-
+			
 			if(Yii::app()->user->checkAccess('author'))
 			{
 				$this->author = Yii::app()->user->name;
@@ -132,6 +133,9 @@ class Comment extends CActiveRecord
 
 	protected function afterDelete()
 	{
+		// если коментарий удален сбрасываем кеш
+		//Yii::app()->cache->flush();
+
 		Yii::log($this->author.' удалил комментарий.', 'info', 'system.*');
 	    return parent::afterDelete();    
 	}
