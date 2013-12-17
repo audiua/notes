@@ -56,54 +56,22 @@ class NoteController extends Controller
 
 	public function actionView()
 	{
+
 		if(isset($_GET['id']))
 		{
 			$id = $_GET['id'];
-		
-		
 			$model = Note::model()->findByPk($id);
 
-			//print_r($model->comments);
-
-			$comment = new Comment;
-		
-			if(Yii::app()->user->isGuest)
-			{
-				$comment->scenario = 'Guest';
-			}
-
-			if(isset($_POST['Comment']))
-			{
-				$comment->attributes = $_POST['Comment'];
-				$comment->note_id = $model->id;
-
-				if($comment->save())
-				{
-					Yii::app()->user->setFlash('comment','Комментарий успешно добавлен!');
-					$this->refresh();
-				}	
-			}
-
+			$this->render('view', array('model'=>$model, 'comment'=>Comment::model())); //10.2 $comment
 		}
 
-		if(isset($_GET['delCom']))
+		if(isset($_GET['comment']))
 		{
-			$comment = new Comment;
-			$page = (int)$_GET['page'];
-			$id = (int)$_GET['delCom'];
-			$comment = Comment::model()->findByPk($id)->delete();
+			$id = $_GET['id'];
+			$model = Note::model()->findByPk($id);
 
-		
-			if($comment>0)
-			{
-				Yii::app()->user->setFlash('comment','Комментарий успешно удален!');
-				
-				$this->redirect(array('note/view','id'=>$page));
-			}
-
+			$this->render('view', array('model'=>$model, 'comment'=>$_GET['comment'])); //10.2 $comment
 		}
-
-		$this->render('view', array('model'=>$model, 'comment'=>$comment)); //
 	}
 
 	public function loadModel($id)
@@ -158,7 +126,7 @@ class NoteController extends Controller
 		else
 		{
 			Yii::app()->user->setFlash('update','Можно обновлять только свои заметки!');
-			$this->render('view', array('model'=>$model));
+			$this->redirect(array('view', 'id'=>$model->id));
 		}
 
 		

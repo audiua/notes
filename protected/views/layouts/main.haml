@@ -1,0 +1,46 @@
+!!!
+%html(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en")
+	%head
+		/blueprint CSS framework
+		%meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+		%meta(name="language" content="en")
+		%link(rel="stylesheet" type="text/css" href="#{Yii::app()->request->baseUrl}/css/screen.css" media="screen, projection" )
+		%link(rel="stylesheet" type="text/css" href="#{Yii::app()->request->baseUrl}/css/print.css" media="print")
+		/[if lt IE 8]
+			%link(rel="stylesheet" type="text/css" href="#{Yii::app()->request->baseUrl}/css/ie.css" media="screen, projection" )
+		%link(rel="stylesheet" type="text/css" href="#{Yii::app()->request->baseUrl}/css/main.css")
+		%link(rel="stylesheet" type="text/css" href="#{Yii::app()->request->baseUrl}/css/form.css")
+		%title= CHtml::encode($this->pageTitle)
+	/head
+	%body
+		.container#page
+			#header
+				#logo= CHtml::encode(Yii::app()->name)
+			/header
+			#mainmenu
+				:php
+					$this->widget('zii.widgets.CMenu',array(
+						'items'=>array(
+							array('label'=>Yii::t('lang_uk', 'Home'), 'url'=>array('/site/index')),
+							array('label'=>'Contact', 'url'=>array('/site/contact')),
+							array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
+							array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('/note/create')),
+							array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+						),
+					));
+			/mainmenu
+			- if(isset($this->breadcrumbs))
+				-	$this->widget('zii.widgets.CBreadcrumbs', array('links'=>$this->breadcrumbs))
+			= $content
+			.clear
+			#footer
+				Copyright &copy; #{date('Y')} by My Company.
+				%br
+				All Rights Reserved.
+				%br
+				= Yii::powered()
+			/footer
+		/page
+	/body
+/html

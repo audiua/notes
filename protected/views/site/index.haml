@@ -1,0 +1,20 @@
+- $this->pageTitle=Yii::app()->name;
+%h1 Welcome to 
+	%i= CHtml::encode(Yii::app()->name)
+%p
+Congratulations! You have successfully created your Yii application.
+%p
+You may change the content of this page by modifying the following two files:
+%ul
+	%li View file: 
+		%code= __FILE__
+	%li Layout file:
+		%code= Yii::app()->layoutPath. DIRECTORY_SEPARATOR . 'main.php'
+%p
+For more details on how to further develop this application, please read the 
+%a(href="http://www.yiiframework.com/doc/#{ $this->pageTitle }")
+	documentation.
+Feel free to ask in the
+%a(href="http://www.yiiframework.com/forum/")
+	forum,
+should you have any questions.

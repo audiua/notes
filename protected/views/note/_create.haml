@@ -1,0 +1,21 @@
+- if($model->isNewRecord)
+	- $this->menu = array(array('label'=>Yii::t('lang_uk', 'Create'),'url'=>array('create')))
+- else
+	:php
+		$this->menu = array(
+			array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')),
+			array('label'=>Yii::t('lang_uk', 'Update'), 'url'=>array('update', 'id'=>$model->id)),
+			array('label'=>Yii::t('lang_uk', 'Delete'), 'url'=>array('delete', 'id'=>$model->id))
+		);
+.form
+	- $form = $this->beginWidget('CActiveForm')
+	= $form->errorSummary($model)
+	.row
+		= $form->labelEx($model, 'title')
+		= $form->textField($model, 'title')
+	.row
+		= $form->labelEx($model, 'text')
+		= $form->textArea($model, 'text', array('rows'=>10, 'cols'=>80))
+	.row.buttoms
+		= CHtml::submitButton($model->isNewRecord ? Yii::t('lang_uk', 'Save') : Yii::t('lang_uk', 'Update'))
+	- $this->endWidget()

@@ -1,0 +1,32 @@
+.form
+	:php
+		$form = $this->beginWidget('CActiveForm', array(
+			'action'=>CHtml::normalizeUrl(array(
+				'comment/create')),
+			'id'=>'comment-form',
+			'method'=>'post'));
+	= $form->errorSummary($model)
+	.row
+		= $form->labelEx($model,'text')
+		= $form->textArea($model,'text',array('rows'=>6, 'cols'=>50))
+		= $form->error($model,'text')
+	= $form->hiddenField($model, 'note_id',array('value'=>$page))
+	- if(Yii::app()->user->isGuest)
+		.row
+			= $form->labelEx($model,'author')
+			= $form->textField($model,'author')
+			= $form->error($model,'author')
+		- if(CCaptcha::checkRequirements())
+			.row
+				= $form->labelEx($model,'verifyCode')
+				%div
+					- $this->widget('CCaptcha')
+					= $form->textField($model,'verifyCode')
+				.hint
+					Please enter the letters as they are shown in the image above.
+					%br
+					Letters are not case-sensitive.
+				= $form->error($model,'verifyCode')
+	.row.buttons
+		= CHtml::submitButton('Create')
+	- $this->endWidget()

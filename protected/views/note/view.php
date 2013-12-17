@@ -36,18 +36,12 @@ $this->widget('zii.widgets.CDetailView', array(
 		),
 )));
 
-if(Yii::app()->user->hasFlash('comment')):
+echo $this->renderPartial('_comment', array('model'=>$comment, 'page'=>$model->id));
 
-echo '<div class="flash-success">';
-    echo Yii::app()->user->getFlash('comment'); 
-echo '</div>';
+// 10.2 вывод комментариев  с кешем
+//echo $this->renderPartial('_comView', array('model'=>$model));
 
-endif;
-
-echo $this->renderPartial('_comment', array('model'=>$comment));
-
-echo $this->renderPartial('_comView', array('model'=>$model));
-
-
+//10.6
+$this->widget('application.components.MyWidget', array('mod'=>$model));
 
 ?>

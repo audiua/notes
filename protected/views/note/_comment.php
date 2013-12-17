@@ -1,9 +1,14 @@
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-    'id'=>'comment-form',
-    'enableAjaxValidation'=>false,
-)); ?>
+
+<?php 
+$form = $this->beginWidget('CActiveForm', array(
+            'action'=>CHtml::normalizeUrl(array(
+                'comment/create')),
+            'id'=>'comment-form',
+            'method'=>'post'));
+
+?>
 
     <?php echo $form->errorSummary($model); ?>
 
@@ -12,6 +17,10 @@
         <?php echo $form->textArea($model,'text',array('rows'=>6, 'cols'=>50)); ?>
         <?php echo $form->error($model,'text'); ?>
     </div>
+
+        <?php echo $form->hiddenField($model, 'note_id',array('value'=>$page)); ?>
+        
+
     <?php if(Yii::app()->user->isGuest):?>
     
         <div class="row">

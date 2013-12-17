@@ -57,6 +57,15 @@ return array(
 		    // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
 		    'defaultRoles' => array('guest'),
 		),
+
+		'viewRenderer'=>array(
+		    'class' => 'application.vendor.delfit.yii-haml.HamlViewRenderer',
+		    // delete options below in production
+		    'ugly' => false,
+		    'style' => 'nested',
+		    'debug' => 0,
+		    'cache' => false,
+		  ),
 		
 		/*
 		'db'=>array(

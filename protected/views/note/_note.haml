@@ -1,0 +1,12 @@
+.view
+	= CHtml::encode($data->id)
+	%br
+	%h3
+		= CHtml::link(CHtml::encode($data->title), array('view', 'id'=>$data->id), array('htmlOptions', 'target'=>'_blank'))
+	%br
+	= CHtml::encode($data->text)
+	%br
+	= Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm:ss", $data->created)
+	%br
+	%b
+		= CHtml::link(CHtml::encode($data->author->login), array('search', 'author'=>$data->author_id), array('htmlOptions', 'target'=>'_blank'))
