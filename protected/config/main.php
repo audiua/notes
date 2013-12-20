@@ -8,12 +8,16 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Notes',
-	'defaultController' => 'note',
+	'defaultController' => 'site',
 	'sourceLanguage'=>'en',
-    'language'=>'uk',
+	'language'=>'uk',
+	// 'theme'=>'classic',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array(
+		'log',
+		'bootstrap'
+	),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -40,7 +44,7 @@ return array(
 			'allowAutoLogin'=>true,
 			'class' => 'WebUser',
 		),
-        'cache'=>array('class'=>'system.caching.CFileCache'),
+		'cache'=>array('class'=>'system.caching.CFileCache'),
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -50,21 +54,24 @@ return array(
 			),
 			'showScriptName'=>false,
 		),
+		'bootstrap' => array(
+			'class' => 'application.yiibooster.components.Bootstrap',
+		),
 
 		'authManager' => array(
-		    // Будем использовать свой менеджер авторизации
-		    'class' => 'PhpAuthManager',
-		    // Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
-		    'defaultRoles' => array('guest'),
+			// Будем использовать свой менеджер авторизации
+			'class' => 'PhpAuthManager',
+			// Роль по умолчанию. Все, кто не админы, модераторы и юзеры — гости.
+			'defaultRoles' => array('guest'),
 		),
 
 		'viewRenderer'=>array(
-		    'class' => 'application.vendor.delfit.yii-haml.HamlViewRenderer',
-		    // delete options below in production
-		    'ugly' => false,
-		    'style' => 'nested',
-		    'debug' => 0,
-		    'cache' => false,
+			'class' => 'application.vendor.delfit.yii-haml.HamlViewRenderer',
+			// delete options below in production
+			'ugly' => false,
+			'style' => 'nested',
+			'debug' => 0,
+			'cache' => false,
 		  ),
 		
 		/*
@@ -80,6 +87,8 @@ return array(
 			'password' => '0000',
 			'charset' => 'utf8',
 			'tablePrefix'=>'tb_',
+			// 'enableProfiling'=>true,
+			// 'enableParamLogging' => true,
 			//'schemaCachingDuration'=>3600,
 		),
 		
@@ -94,6 +103,13 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'info',
 					'categories'=>'system.*',
+					// array(
+					// 	// направляем результаты профайлинга в ProfileLogRoute (отображается
+					// 	// внизу страницы)
+					// 	'class'=>'CProfileLogRoute',
+					// 	'levels'=>'profile',
+					// 	'enabled'=>true,
+					// ),
 				),
 				// uncomment the following to show log messages on web pages
 				/*

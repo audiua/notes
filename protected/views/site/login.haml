@@ -1,37 +1,57 @@
-
-- $this->pageTitle=Yii::app()->name . ' - Login'
-- $this->breadcrumbs=array('Login')
-%h1 Login
-%p
-  Please fill out the following form with your login credentials:
-.form
-  - $form=$this->beginWidget('CActiveForm', array('id'=>'login-form', 'enableClientValidation'=>true, 'clientOptions'=>array('validateOnSubmit'=>true)))
-  %p.note
-    Fields with
-    %span.required *
-    are required.
-  .row
-    = $form->labelEx($model,'username')
-    = $form->textField($model,'username')
-    = $form->error($model,'username')
-  .row
-    = $form->labelEx($model,'password')
-    = $form->passwordField($model,'password')
-    = $form->error($model,'password')
-  %p.hint
-    Hint: You may login with 
-    %kbd demo
-    /
-    %kbd demo
-    or
-    %kbd admin
-    /
-    %kbd admin.
-  .row.rememberMe
-    = $form->checkBox($model,'rememberMe')
-    = $form->label($model,'rememberMe')
-    = $form->error($model,'rememberMe')
-  .row.buttons
-    = CHtml::submitButton('Login')
-- $this->endWidget()
-/ rorm
+// - $this->pageTitle=Yii::app()->name . ' - Login'
+// - $this->breadcrumbs=array('Login')
+// %h1 Login
+// %p
+// 	Please fill out the following form with your login credentials:
+// .form
+// 	- $form=$this->beginWidget('CActiveForm', array('id'=>'login-form', 'enableClientValidation'=>true, 'clientOptions'=>array('validateOnSubmit'=>true)))
+// 	%p.note
+// 		Fields with
+// 		%span.required *
+// 		are required.
+// 	.row
+// 		= $form->labelEx($model,'username')
+// 		= $form->textField($model,'username')
+// 		= $form->error($model,'username')
+// 	.row
+// 		= $form->labelEx($model,'password')
+// 		= $form->passwordField($model,'password')
+// 		= $form->error($model,'password')
+// 	%p.hint
+// 		Hint: You may login with 
+// 		%kbd demo\/
+// 		%kbd demo
+// 		or
+// 		%kbd admin\/
+// 		%kbd admin.
+// 	.row.rememberMe
+// 		= $form->checkBox($model,'rememberMe')
+// 		= $form->label($model,'rememberMe')
+// 		= $form->error($model,'rememberMe')
+// 	.row.buttons
+// 		= CHtml::submitButton('Login')
+// - $this->endWidget()
+// / form
+:php
+	$form = $this->beginWidget(
+	'bootstrap.widgets.TbActiveForm',
+	array(
+		'id' => 'verticalForm',
+		'htmlOptions' => array('class' => 'well'), // for inset effect
+	));
+%fieldset
+	%legend
+		%p.note
+			Fields with
+			%span.required *
+			are required.
+		= $form->textFieldRow($model, 'username', array('class' => 'span', 'prepend' => '<i class="icon-user"></i>'))
+		= $form->passwordFieldRow($model, 'password', array('class' => 'span','prepend' => '<i class="icon-tags"></i>'))
+	= $form->checkboxRow($model, 'rememberMe')
+	:php
+		$this->widget(
+		'bootstrap.widgets.TbButton',
+		array('buttonType' => 'submit', 'label' => 'Login', 'type'=>'success')
+		);
+	- $this->endWidget();
+	- unset($form);

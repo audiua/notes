@@ -1,0 +1,49 @@
+.view
+	:php
+		$arr = array('success', 'warning', 'important', 'info', 'inverse');
+		$type = $arr[array_rand($arr)];
+		$label = CHtml::encode($data->id);
+		$this->widget('bootstrap.widgets.TbLabel', compact('type', 'label'));
+	.comment(data-id="#{ $data->id }")
+		= CHtml::encode($data->text)
+	- if(Yii::app()->user->checkAccess('author'))
+		:php
+			$this->widget('bootstrap.widgets.TbEditableField',array(
+				'type' => 'text',
+				'model' => $data,
+				'attribute' => 'text', // $model->name will be editable
+				'url' => '/comment/update', //url for submit data
+				'validate'=>'js: function(value) { 
+					if ($.trim(value) == "") 
+					return "This field is required" }',
+				// 'success' => 'js: function(data) {
+				// 	alert(data);}',
+				'display' => 'js: function(value, sourceData) {
+					var escapedValue = $("<div>").text(value).html();
+					$(this).html("<b>" + escapedValue + "</b>");
+					if(sourceData)
+					{
+						var obj = JSON.parse(sourceData);
+						var comment = $("[data-id="+obj.id+"]").text(obj.text);
+					}
+				}'
+			));
+		
+	%br
+	= Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm:ss", $data->created)
+	%br
+	= CHtml::encode($data->author)
+	%br
+	- if(Yii::app()->user->checkAccess('author'))
+		//= CHtml::link('Delete', array('comment/delete', 'id'=>$data->id, 'page'=>$data->note_id))
+		:php
+			$this->widget(
+			'bootstrap.widgets.TbButton',
+			array(
+			'label' => 'Delete',
+			'type'=>'danger',
+			'size'=>'small',
+			'url'=>array('comment/delete', 'id'=>$data->id, 'page'=>$data->note_id),
+			'icon'=>'icon-ban-circle'
+			)
+			);

@@ -17,21 +17,53 @@
 			#header
 				#logo= CHtml::encode(Yii::app()->name)
 			/header
-			#mainmenu
+			//#mainmenu
 				:php
-					$this->widget('zii.widgets.CMenu',array(
-						'items'=>array(
-							array('label'=>Yii::t('lang_uk', 'Home'), 'url'=>array('/site/index')),
-							array('label'=>'Contact', 'url'=>array('/site/contact')),
-							array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
-							array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('/note/create')),
-							array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-							array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-						),
+					$this->widget('bootstrap.widgets.TbNavbar', array(
+						'brand' => Yii::t('lang_uk', 'Home'),
+						//'brandUrl' => '#',
+						'fixed' => false,
+						'type' => 'inverse',
+						'items' => array(
+							array(
+								'class' => 'bootstrap.widgets.TbMenu',
+								'items' => array(
+									array('label'=>'Первая', 'url'=>'/site/index'),
+									array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
+									array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+									array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+									array(
+										'label' => 'Dropdown',
+										'url' => '#',
+										'items' => array(
+											array('label' => 'Action', 'url' => '#'),
+											array('label' => 'Another action', 'url' => '#'),
+											array('label' => 'Something else here', 'url' => '#'),
+											'---',
+											array('label' => 'NAV HEADER'),
+											array('label' => 'Separated link', 'url' => '#'),
+											array('label' => 'One more separated link', 'url' => '#'),
+										)
+									),
+								)
+							)
+						)
 					));
+					// $this->widget('zii.widgets.CMenu',array(
+					// 	'items'=>array(
+					// 		array('label'=>Yii::t('lang_uk', 'Home'), 'url'=>array('/site/index')),
+					// 		array('label'=>'Contact', 'url'=>array('/site/contact')),
+					// 		array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
+					// 		array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('/note/create')),
+					// 		array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+					// 		array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+					// 	),
+					// ));
 			/mainmenu
-			- if(isset($this->breadcrumbs))
-				-	$this->widget('zii.widgets.CBreadcrumbs', array('links'=>$this->breadcrumbs))
+			.row
+				.span12
+					- if(isset($this->breadcrumbs))
+						-	$this->widget('bootstrap.widgets.TbBreadcrumbs',array('links'=>$this->breadcrumbs))
 			= $content
 			.clear
 			#footer

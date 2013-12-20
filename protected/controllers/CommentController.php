@@ -41,6 +41,9 @@ class CommentController extends Controller
 
 	public function actionCreate()
 	{
+		//print_r($_POST['comment']);
+
+
 		if(isset($_POST['Comment']))
 		{
 			$comment = new Comment;
@@ -60,8 +63,29 @@ class CommentController extends Controller
 			else
 			{
 				Yii::app()->user->setFlash('comment','Комментарий не добавлен!');
-				$this->redirect(array('note/view','id'=>$_POST['Comment']['note_id']));
+				$this->redirect(array($this->createUrl('note/view', array('id'=>$_POST['Comment']['note_id']))));
 			}
 		}
+
+	}
+
+	public function actionUpdate()
+	{
+		if(isset($_POST['name']))
+		{
+
+			// $comment = Comment::model()->findByPk($_POST['pk']);
+			$comment = Comment::model()->findByPk($_POST['pk']);
+
+			$comment->text = $_POST['value'];
+			
+			if($comment->save())
+			{
+				echo json_encode($comment->attributes);
+
+				//print_r($comment->attributes);
+			}
+		}
+
 	}
 }

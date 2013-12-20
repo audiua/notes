@@ -1,12 +1,32 @@
 .view
-	= CHtml::encode($data->id)
+	%b
+		ID
+		:php
+			$this->widget(
+			'bootstrap.widgets.TbBadge',
+			array(
+			'type' => 'success',
+			// 'success', 'warning', 'important', 'info' or 'inverse'
+			'label' => CHtml::encode($data->id),
+			)
+			);
 	%br
 	%h3
 		= CHtml::link(CHtml::encode($data->title), array('view', 'id'=>$data->id), array('htmlOptions', 'target'=>'_blank'))
 	%br
-	= CHtml::encode($data->text)
+	// = CHtml::encode($data->text)
+	= $data->text
 	%br
 	= Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm:ss", $data->created)
 	%br
 	%b
+		:php
+			$this->widget(
+			'bootstrap.widgets.TbLabel',
+			array(
+			'type' => 'success',
+			// 'success', 'warning', 'important', 'info' or 'inverse'
+			'label' => $data->author->login,
+			)
+			);
 		= CHtml::link(CHtml::encode($data->author->login), array('search', 'author'=>$data->author_id), array('htmlOptions', 'target'=>'_blank'))

@@ -2,7 +2,11 @@
 
 class NoteController extends Controller
 {
-
+	public $lion = '';
+	public $bear = '';
+	public $fox = '';
+	public $wolf = '';
+	public $tabsComments = array();
 	public function actions()
 	{
 		return array(
@@ -65,13 +69,13 @@ class NoteController extends Controller
 			$this->render('view', array('model'=>$model, 'comment'=>Comment::model())); //10.2 $comment
 		}
 
-		if(isset($_GET['comment']))
-		{
-			$id = $_GET['id'];
-			$model = Note::model()->findByPk($id);
+		// if(isset($_GET['comment']))
+		// {
+		// 	$id = $_GET['id'];
+		// 	$model = Note::model()->findByPk($id);
 
-			$this->render('view', array('model'=>$model, 'comment'=>$_GET['comment'])); //10.2 $comment
-		}
+		// 	$this->render('view', array('model'=>$model, 'comment'=>$_GET['comment'])); //10.2 $comment
+		// }
 	}
 
 	public function loadModel($id)
@@ -116,7 +120,13 @@ class NoteController extends Controller
 				$model->attributes = $_POST['Note'];
 				if($model->save())
 				{
-					Yii::app()->user->setFlash('update','Страница обновлена!');
+					$user = Yii::app()->getComponent('user');
+					$user->setFlash(
+						'success',
+						"<strong>Запись</strong> обновлена."
+					);
+
+					//Yii::app()->user->setFlash('update','Страница обновлена!');
 					$this->redirect(array('view', 'id'=>$model->id));
 				}
 			}
@@ -125,7 +135,12 @@ class NoteController extends Controller
 		}
 		else
 		{
-			Yii::app()->user->setFlash('update','Можно обновлять только свои заметки!');
+			//Yii::app()->user->setFlash('update','Можно обновлять только свои заметки!');
+			$user = Yii::app()->getComponent('user');
+				$user->setFlash(
+					'error',
+					'Можно обновлять только свои заметки!'
+				);
 			$this->redirect(array('view', 'id'=>$model->id));
 		}
 
@@ -142,7 +157,12 @@ class NoteController extends Controller
 
 			if($result > 0)
 			{
-				Yii::app()->user->setFlash('delete','Страница <b>'.$model->title.'</b> удалена!');
+				//Yii::app()->user->setFlash('delete','Страница <b>'.$model->title.'</b> удалена!');
+				$user = Yii::app()->getComponent('user');
+				$user->setFlash(
+					'info',
+					'Страница <b>'.$model->title.'</b> удалена!'
+				);
 			}
 
 			$criteria = new CDbCriteria;
@@ -165,14 +185,17 @@ class NoteController extends Controller
 				
 			));
 
-			Yii::app()->user->setFlash('delete','Удалять чужие заметки не разрешенно!');
+			//Yii::app()->user->setFlash('delete','Удалять чужие заметки не разрешенно!');
+			$user = Yii::app()->getComponent('user');
+				$user->setFlash(
+					'error',
+					"Удалять чужие заметки не разрешенно!"
+				);
+			
+
+
 			$this->render('index', array('dataProvider'=>$dataProvider));
 		}
-
-
-
-		
-		
 			
 	}
 

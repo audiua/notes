@@ -30,13 +30,13 @@ class Comment extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('text', 'required'),
-			array('text, author', 'required', 'on'=>'Guest'),
+			array('author', 'required', 'on'=>'Guest'),
 			array('created, note_id', 'length', 'max'=>11),
 			array('author', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, text, created, author, note_id', 'safe', 'on'=>'search'),
-			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(),'on'=>'Guest'),
+			//array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(),'on'=>'Guest'),
 		);
 	}
 

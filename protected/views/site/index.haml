@@ -1,3 +1,25 @@
+:php
+	$this->widget('bootstrap.widgets.TbCarousel', array(
+	'items' => array(
+		array(
+			'image' => '/images/third-placeholder830x400.gif', 
+			'caption' => 'Image Caption 1', 
+			'body' => 'This is a thumnail. What a great picture.', 
+			'active' => true),
+		array(
+			'image' => '/images/third-placeholder830x400.gif', 
+			'caption' => 'Image Caption 2', 
+			'body' => 'This is a thumnail. What a great picture.'),
+		array(
+			'image' => '/images/third-placeholder830x400.gif', 
+			'caption' => 'Image Caption 3', 
+			'body' => 'This is a thumnail. What a great picture.'),
+		array(
+			'image' => '/images/o_1.jpeg', 
+			'caption' => 'Image Caption 4', 
+			'body' => 'This is a thumnail. What a great picture.'),
+		)
+	));
 - $this->pageTitle=Yii::app()->name;
 %h1 Welcome to 
 	%i= CHtml::encode(Yii::app()->name)
@@ -18,3 +40,7 @@ Feel free to ask in the
 %a(href="http://www.yiiframework.com/forum/")
 	forum,
 should you have any questions.
+
+
+
+

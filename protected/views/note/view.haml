@@ -1,13 +1,47 @@
-- $this->breadcrumbs=array($model->title)
+:php
+	foreach($model->comments as $com)
+	{
+		if($com->author == 'lion')
+			$this->lion .= '- '.$com->text.'<br>';
+		if($com->author == 'bear')
+			$this->bear .= '- '.$com->text.'<br>';
+		if($com->author == 'fox')
+			$this->fox .= '- '.$com->text.'<br>';
+		if($com->author == 'wolf')
+			$this->wolf .= '- '.$com->text.'<br>';
+	}
+	$this->tabsComments = array(
+		array('label' => 'lion','content' => $this->lion,'active' => true),
+		array('label' => 'bear', 'content' => $this->bear),
+		array('label' => 'fox', 'content' => $this->fox),
+		array('label' => 'wolf', 'content' => $this->wolf)
+	);
+- $this->breadcrumbs=array('Заметки' => 'index', $model->title)
+// - $this->widget('bootstrap.widgets.TbBreadcrumbs',array('links' => array('Заметки' => 'index', $model->title),))
 :php
 	$this->menu = array(
 		array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')),
 		array('label'=>Yii::t('lang_uk', 'Update'), 'url'=>array('update', 'id'=>$model->id)),
 		array('label'=>Yii::t('lang_uk', 'Delete'), 'url'=>array('delete', 'id'=>$model->id))
 	);
-- if(Yii::app()->user->hasFlash('update'))
-	.flash-success
-		= Yii::app()->user->getFlash('update')
+
+//- if(Yii::app()->user->hasFlash('update'))
+:php
+	$this->widget('bootstrap.widgets.TbAlert', array(
+		'block' => true,
+		'fade' => true,
+		'closeText' => '&times;', // false equals no close link
+		'events' => array(),
+		'htmlOptions' => array(),
+		'userComponentId' => 'user',
+		'alerts' => array( // configurations per alert type
+		// success, info, warning, error or danger
+			'success' => array('closeText' => '&times;', 'block'=>true),
+			'info', // you don't need to specify full config
+			'warning' => array('block' => false, 'closeText' => false),
+			'error' => array('block' => false, 'closeText' => 'AAARGHH!!')
+		),
+	));
 :php
 	$this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
@@ -26,3 +60,12 @@
 	)));
 = $this->renderPartial('_comment', array('model'=>$comment, 'page'=>$model->id))
 - $this->widget('application.components.MyWidget', array('mod'=>$model))
+:php
+	foreach(array('success', 'warning', 'important', 'info', 'inverse') as $label => $type) 
+	{
+		$this->widget('bootstrap.widgets.TbBadge', compact('type', 'label'));
+	}
+	$this->widget('bootstrap.widgets.TbProgress', array(
+		'type' => 'success', // 'info', 'success' or 'danger'
+		'percent' => 10,
+	));

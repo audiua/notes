@@ -227,3 +227,13 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.bbb
+{
+	outline: 1px solid #ff0000; /* Параметры рамки */
+}
+
+.bbb2
+{
+	outline: 1px solid #0000ff; /* Параметры рамки */
+}
