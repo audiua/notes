@@ -1,0 +1,31 @@
+- $this->beginContent('main')
+.row-fluid
+	.span8
+		.span-19
+			#content
+				= $content
+			/content
+	.span4
+		.span-5.last
+			#sidebar
+				:php
+					$this->beginWidget('zii.widgets.CPortlet', array(
+						'title'=>Yii::t('lang_uk', 'Operations'),
+					));
+						$this->widget('zii.widgets.CMenu', array(
+							'items'=>$this->menu,
+							'htmlOptions'=>array('class'=>'operations'),
+						));
+					$this->endWidget();
+
+					$this->beginWidget('zii.widgets.CPortlet', array(
+						'title'=>'Комментарии по авторам',
+					));
+						$this->widget('bootstrap.widgets.TbTabs',array(
+							'type' => 'tabs', // 'tabs' or 'pills'
+							'tabs' => $this->tabsComments,
+							));
+
+					$this->endWidget();
+			/sidebar
+- $this->endContent()

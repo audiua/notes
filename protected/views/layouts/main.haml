@@ -32,6 +32,7 @@
 									array('label'=>Yii::t('lang_uk', 'Notes'), 'url'=>array('/note')),
 									array('label'=>Yii::t('lang_uk', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 									array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+									array('label'=>'Admin', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
 									array(
 										'label' => 'Dropdown',
 										'url' => '#',

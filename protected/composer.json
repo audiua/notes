@@ -19,7 +19,7 @@
 	],
 	"require": {
 		"delfit/phamlp": "dev-master",
-		"delfit/yii-haml": "dev-master"
+		"delfit/yii-haml": "dev-master",
+		"clevertech/yii-booster": "dev-master"
 	}
 }
-	

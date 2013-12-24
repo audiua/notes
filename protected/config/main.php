@@ -11,7 +11,8 @@ return array(
 	'defaultController' => 'site',
 	'sourceLanguage'=>'en',
 	'language'=>'uk',
-	// 'theme'=>'classic',
+	// 'theme'=>'spring',
+	'theme'=>'autumn',
 
 	// preloading 'log' component
 	'preload'=>array(
@@ -34,6 +35,7 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
+		'admin',
 		
 	),
 
@@ -80,12 +82,25 @@ return array(
 		),
 		// uncomment the following to use a MySQL database
 		*/
+		// MySql
+		// 'db'=>array(
+		// 	'connectionString' => 'mysql:host=localhost;dbname=notes',
+		// 	'emulatePrepare' => true,
+		// 	'username' => 'root',
+		// 	'password' => '0000',
+		// 	'charset' => 'utf8',
+		// 	'tablePrefix'=>'tb_',
+		// 	// 'enableProfiling'=>true,
+		// 	// 'enableParamLogging' => true,
+		// 	//'schemaCachingDuration'=>3600,
+		// ),
+		// Postgres
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=notes',
+			'connectionString' => 'pgsql:host = localhost; port = 5432; dbname = notes',
 			'emulatePrepare' => true,
-			'username' => 'root',
+			'username' => 'note',
 			'password' => '0000',
-			'charset' => 'utf8',
+			// 'charset' => 'utf8',
 			'tablePrefix'=>'tb_',
 			// 'enableProfiling'=>true,
 			// 'enableParamLogging' => true,

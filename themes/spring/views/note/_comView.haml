@@ -1,0 +1,13 @@
+- if($this->beginCache('listComment', array('dependency'=>array('class'=>'system.caching.dependencies.CDbCacheDependency','sql'=>'SELECT COUNT(*) FROM tb_comment')))) 
+	- foreach($model->comments as $comm)
+		.view
+			= CHtml::encode($comm->text)
+			%br
+			= Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm:ss", $comm->created)
+			%br
+			= CHtml::encode($comm->author)
+			%br
+			- if(Yii::app()->user->id == $model->author->id)
+				= CHtml::link('Delete', array('view', 'delCom'=>$comm->id, 'page'=>$model->id))
+	$this->endCache()
+

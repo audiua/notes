@@ -1,0 +1,9 @@
+.view
+	= CHtml::encode($data->text)
+	%br
+	= Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm:ss", $data->created)
+	%br
+	= CHtml::encode($data->author)
+	%br
+	- if(Yii::app()->user->id == $model->author->id)
+		= CHtml::link('Delete', array('view', 'delCom'=>$comm->id, 'page'=>$model->id))

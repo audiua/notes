@@ -1,0 +1,18 @@
+.form
+	:php
+		$form = $this->beginWidget('CActiveForm', array(
+			'action'=>CHtml::normalizeUrl(array(
+				'note/search')),
+			'method'=>'post'));
+	.row
+		= $form->labelEx($model, 'id')
+		= $form->textField($model, 'id')
+	.row
+		= $form->labelEx($model, 'title')
+		= $form->textField($model, 'title')
+	.row
+		= $form->labelEx($model, 'author_id')
+		= $form->dropDownList($model,'author_id', Author::all(), array('empty'=>''))
+	.row.buttons
+		= CHtml::submitButton('Искать')
+	- $this->endWidget()

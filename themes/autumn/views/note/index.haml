@@ -1,0 +1,35 @@
+// :php
+// 	$this->tabsComments = array(
+// 		// array('label' => 'lion','content' => 'Home Content','active' => true),
+// 		// array('label' => 'bear', 'content' => 'Profile Content'),
+// 		// array('label' => 'fox', 'content' => 'Messages Content'),
+// 		// array('label' => 'wolf', 'content' => 'Messages Content')
+// 	);
+- $this->breadcrumbs=array('Заметки')
+- $this->menu = array( array('label'=>Yii::t('lang_uk', 'Create'), 'url'=>array('create')))
+- $this->renderPartial('_search', array('model'=>$dataProvider->model))
+// - if(Yii::app()->user->hasFlash('delete'))
+// 	.flash-success
+// 		= Yii::app()->user->getFlash('delete')
+:php
+	$this->widget('bootstrap.widgets.TbAlert', array(
+		'block' => true,
+		'fade' => true,
+		'closeText' => '&times;', // false equals no close link
+		'events' => array(),
+		'htmlOptions' => array(),
+		'userComponentId' => 'user',
+		'alerts' => array( // configurations per alert type
+		// success, info, warning, error or danger
+			'success' => array('closeText' => '&times;'),
+			'info', // you don't need to specify full config
+			'warning' => array('block' => false, 'closeText' => false),
+			'error' => array('block' => false, 'closeText' => 'AAARGHH!!')
+		),
+	));
+:php
+	$this->widget('zii.widgets.CListView',array(
+		'dataProvider'=>$dataProvider,
+		'itemView'=> '_note',
+		'sortableAttributes'=>array('title','id', 'author_id'),
+	));
