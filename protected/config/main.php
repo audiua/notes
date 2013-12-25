@@ -11,8 +11,8 @@ return array(
 	'defaultController' => 'site',
 	'sourceLanguage'=>'en',
 	'language'=>'uk',
-	// 'theme'=>'spring',
-	'theme'=>'autumn',
+	'theme'=>'spring',
+	// 'theme'=>'autumn',
 
 	// preloading 'log' component
 	'preload'=>array(
@@ -36,7 +36,6 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		'admin',
-		
 	),
 
 	// application components
@@ -94,6 +93,7 @@ return array(
 		// 	// 'enableParamLogging' => true,
 		// 	//'schemaCachingDuration'=>3600,
 		// ),
+		// ----------------
 		// Postgres
 		'db'=>array(
 			'connectionString' => 'pgsql:host = localhost; port = 5432; dbname = notes',
