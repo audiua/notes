@@ -3,6 +3,10 @@ class WebUser extends CWebUser {
     private $_model = null;
  
     function getRole() {
+        if(isset($author->role))
+        {
+            return $author->role;
+        }
         if($author = $this->getModel()){
             // в таблице User есть поле role
             return $author->role;

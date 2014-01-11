@@ -105,4 +105,21 @@ class Author extends CActiveRecord
 	{
 		return CHtml::listData(self::model()->findAll(), 'id', 'login');
 	}
+
+	// public function beforeSave()
+	// {
+	// 	if($this->isNewRecord)
+	// 	{
+	// 		$this->created = time();
+	// 		$this->author_id = Yii::app()->user->id;
+
+	// 		// пишем id автора из арр
+	// 	}
+
+	// 	return parent::beforeSave();
+	// }
+
+	
+
+
 }

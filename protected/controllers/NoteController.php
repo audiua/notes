@@ -93,6 +93,9 @@ class NoteController extends Controller
 
 	public function actionCreate()
 	{
+		
+
+
 		$model = new Note('create');
 		//$model->scenario='create';
 
@@ -104,6 +107,7 @@ class NoteController extends Controller
 				$this->redirect(array('view', 'id'=>$model->id));
 			}
 		}
+
 		
 		$this->render('create', array('model'=>$model));
 	}

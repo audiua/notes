@@ -11,19 +11,25 @@ return array(
 	'defaultController' => 'site',
 	'sourceLanguage'=>'en',
 	'language'=>'uk',
-	'theme'=>'spring',
+	// 'theme'=>'spring',
 	// 'theme'=>'autumn',
 
 	// preloading 'log' component
 	'preload'=>array(
 		'log',
-		'bootstrap'
+		'bootstrap',
 	),
 
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'ext.eoauth.*',
+		'ext.eoauth.lib.*',
+		'ext.lightopenid.*',
+		'ext.eauth.services.*',
+		'ext.eauth.*',
+
 	),
 
 	'modules'=>array(
@@ -74,6 +80,31 @@ return array(
 			'debug' => 0,
 			'cache' => false,
 		  ),
+		'loid' => array(
+            'class' => 'ext.lightopenid.loid',
+        ),
+        'eauth' => array(
+            'class' => 'ext.eauth.EAuth',
+            'popup' => true, // Use the popup window instead of redirecting.
+            'cache' => false, // Cache component name or false to disable cache. Defaults to 'cache'.
+            'cacheExpire' => 0, // Cache lifetime. Defaults to 0 - means unlimited.
+            'services' => array( // You can change the providers and their classes.
+                'google' => array(
+                    'class' => 'GoogleOpenIDService',
+                    //'realm' => '*.example.org',
+                ),
+                'yandex' => array(
+                    'class' => 'YandexOpenIDService',
+                    //'realm' => '*.example.org',
+                ),
+                'vkontakte' => array(
+                    // register your app here: https://vk.com/editapp?act=create&site=1
+                    'class' => 'VKontakteOAuthService',
+                    'client_id' => '...',
+                    'client_secret' => '...',
+                ),
+            ),
+        ),
 		
 		/*
 		'db'=>array(

@@ -78,6 +78,49 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
+
+		$service = Yii::app()->request->getQuery('service');
+		if (isset($service)) {
+			$authIdentity = Yii::app()->eauth->getIdentity($service);
+			$authIdentity->redirectUrl = Yii::app()->user->returnUrl;
+			$authIdentity->cancelUrl = $this->createAbsoluteUrl('site/login');
+			
+			if ($authIdentity->authenticate()) {
+				$identity = new EAuthUserIdentity($authIdentity);
+				
+				// Успешный вход
+				if ($identity->authenticate()) {
+					Yii::app()->user->login($identity);
+					
+				   
+
+					if(! $new = Author::model()->findByAttributes(array('service_id' => Yii::app()->user->id)))
+					{
+						$aut = new Author;
+						//$aut->id = "123";
+						$aut->login = Yii::app()->user->name;
+						//$aut->password = "aaa";
+						$aut->created = time();
+						$aut->role = "author";
+						$aut->service_id = Yii::app()->user->id;
+						$aut->save();
+
+					}
+
+					// Специальный редирект с закрытием popup окна
+					$authIdentity->redirect();
+				}
+				else {
+					// Закрываем popup окно и перенаправляем на cancelUrl
+					$authIdentity->cancel();
+				}
+			}
+			
+			// Что-то пошло не так, перенаправляем на страницу входа
+			$this->redirect(array('site/login'));
+		}
+
+		
 		$model=new LoginForm;
 
 		// if it is ajax validation request
