@@ -31,6 +31,10 @@ class NoteController extends Controller
 	{
 		return array(
 
+array('allow',  // deny all users
+				'actions'=>array('create', 'update', 'delete'),
+				'users'=>array('*'),
+			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('create', 'update', 'delete'),
 				'roles'=>array('author'),
@@ -60,6 +64,8 @@ class NoteController extends Controller
 
 	public function actionView()
 	{
+		echo Yii::app()->user->role;
+		echo Yii::app()->user->id;
 
 		if(isset($_GET['id']))
 		{
@@ -93,9 +99,6 @@ class NoteController extends Controller
 
 	public function actionCreate()
 	{
-		
-
-
 		$model = new Note('create');
 		//$model->scenario='create';
 

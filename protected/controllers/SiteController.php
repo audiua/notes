@@ -101,11 +101,13 @@ class SiteController extends Controller
 						$aut->login = Yii::app()->user->name;
 						//$aut->password = "aaa";
 						$aut->created = time();
-						$aut->role = "author";
+						$aut->role = 'author';
 						$aut->service_id = Yii::app()->user->id;
 						$aut->save();
-
 					}
+
+					Yii::app()->user->id = Author::model()->findByAttributes(array('service_id' => Yii::app()->user->id))->id;
+
 
 					// Специальный редирект с закрытием popup окна
 					$authIdentity->redirect();
