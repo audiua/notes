@@ -31,10 +31,6 @@ class NoteController extends Controller
 	{
 		return array(
 
-array('allow',  // deny all users
-				'actions'=>array('create', 'update', 'delete'),
-				'users'=>array('*'),
-			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('create', 'update', 'delete'),
 				'roles'=>array('author'),

@@ -92,8 +92,6 @@ class SiteController extends Controller
 				if ($identity->authenticate()) {
 					Yii::app()->user->login($identity);
 					
-				   
-
 					if(! $new = Author::model()->findByAttributes(array('service_id' => Yii::app()->user->id)))
 					{
 						$aut = new Author;

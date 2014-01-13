@@ -52,7 +52,6 @@ class EAuthUserIdentity extends CBaseUserIdentity {
 			$this->name = $this->service->getAttribute('name');
 
 			$this->setState('id', $this->id);
-			//$this->setState('role', 'author');
 			$this->setState('name', $this->name);
 			$this->setState('service', $this->service->serviceName);
 

@@ -29,6 +29,7 @@ return array(
 		'ext.lightopenid.*',
 		'ext.eauth.services.*',
 		'ext.eauth.*',
+		'ext.YiiDisqusWidget.YiiDisqusWidget',
 
 	),
 
@@ -93,16 +94,16 @@ return array(
                     'class' => 'GoogleOpenIDService',
                     //'realm' => '*.example.org',
                 ),
-                'yandex' => array(
-                    'class' => 'YandexOpenIDService',
-                    //'realm' => '*.example.org',
-                ),
-                'vkontakte' => array(
-                    // register your app here: https://vk.com/editapp?act=create&site=1
-                    'class' => 'VKontakteOAuthService',
-                    'client_id' => '...',
-                    'client_secret' => '...',
-                ),
+                // 'yandex' => array(
+                //     'class' => 'YandexOpenIDService',
+                //     //'realm' => '*.example.org',
+                // ),
+                // 'vkontakte' => array(
+                //     // register your app here: https://vk.com/editapp?act=create&site=1
+                //     'class' => 'VKontakteOAuthService',
+                //     'client_id' => '',
+                //     'client_secret' => '',
+                // ),
             ),
         ),
 		
