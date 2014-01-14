@@ -130,7 +130,7 @@ return array(
 		'db'=>array(
 			'connectionString' => 'pgsql:host = localhost; port = 5432; dbname = notes',
 			'emulatePrepare' => true,
-			'username' => 'note',
+			'username' => 'postgres',
 			'password' => '0000',
 			// 'charset' => 'utf8',
 			'tablePrefix'=>'tb_',
